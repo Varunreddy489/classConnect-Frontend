@@ -1,22 +1,35 @@
 import { z } from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { axiosInstance } from "@/lib/axios";
 import { useToast } from "@/hooks/use-toast";
 import { StudentLoginTypes } from "@/types/types";
-import { Link } from "react-router-dom";
 
 const Login = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible((prev) => !prev);
+  };
+
   const schema = z.object({
-    email: z.string().email({ message: "Invalid email address" }),
+    email: z
+      .string()
+      .email({ message: "Invalid email address" })
+      .default("12345678"),
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
+      .min(8, { message: "Password must be at least 8 characters" })
+      .default("12345678"),
   });
 
   const {
@@ -30,15 +43,15 @@ const Login = () => {
   const { mutate: login } = useMutation({
     mutationFn: async (data: StudentLoginTypes) => {
       const res = await axiosInstance.post("/student/login", data);
+      console.log(res.data);
       return res.data;
     },
     onSuccess: () => {
+      navigate("/home");
       toast({
         title: "Success: Welcome to ClassConnect!",
         description: "You have logged in successfully.",
       });
-
-      // Invalidate queries to refetch user data
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
     },
     onError: (err: any) => {
@@ -46,8 +59,7 @@ const Login = () => {
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description:
-          err?.response?.data.message ||
-          "There was a problem with your request.",
+          err?.response?.data.error || "There was a problem with your request.",
       });
 
       console.error("Login error:", err);
@@ -82,6 +94,7 @@ const Login = () => {
               {...loginField("email", { required: true })} // Using renamed register
               placeholder="johndoe@example.com"
               type="email"
+              value={"varunsannapureddy@gmail.com"}
               className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-100 focus:outline-none"
             />
             {errors.email && (
@@ -90,20 +103,38 @@ const Login = () => {
           </div>
 
           {/* Password */}
-          <div>
+          <div className="dark:text-white text-black ">
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Password
               </label>
-              <input
-                {...loginField("password", { required: true })}
-                placeholder="••••••••"
-                type="password"
-                className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-100 focus:outline-none"
-              />
-              {errors.password && (
-                <div className="text-red-600">{errors.password.message}</div>
-              )}
+              <div className="relative">
+                {" "}
+                {/* Step 3: Wrap input and icons in a relative div */}
+                <input
+                  {...loginField("password", { required: true })}
+                  placeholder="••••••••"
+                  value={"12345678"}
+                  type={isPasswordVisible ? "text" : "password"} // Change type based on visibility
+                  className="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-100 focus:outline-none"
+                />
+                {errors.password && (
+                  <div className="text-red-600">{errors.password.message}</div>
+                )}
+                {/* Step 4: Add icons and attach the toggle function to the onClick event */}
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                >
+                  {isPasswordVisible ? (
+                    <EyeOff className="dark:text-white text-black " />
+                  ) : (
+                    <Eye className="dark:text-white text-black " />
+                  )}{" "}
+                  {/* Show/hide based on visibility state */}
+                </button>
+              </div>
             </div>
             <div className="text-right">
               <Link

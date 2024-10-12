@@ -43,9 +43,7 @@ const ClubDetails = ({ clubId }: { clubId: string }) => {
       <p className="text-sm text-gray-600 dark:text-gray-400">
         {data?.description}
       </p>
-      {/* <p className="text-sm text-gray-600 dark:text-gray-400">
-        {} members
-      </p> */}
+
       <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">
         <strong>Members ( {data.members.length} )</strong>
         <ul className="list-disc pl-5 mt-2x flex-col  space-y-4 ">

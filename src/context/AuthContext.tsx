@@ -1,5 +1,61 @@
-import { ReactNode } from "react";
+import {
+  FC,
+  useState,
+  useEffect,
+  ReactNode,
+  useContext,
+  createContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
-export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-    
-}
+import { axiosInstance } from "@/lib/axios";
+import { AuthUserType } from "@/types/types";
+import { useNavigate } from "react-router-dom";
+
+const AuthContext = createContext<{
+  authUser: AuthUserType | null;
+  setAuthUser: Dispatch<SetStateAction<AuthUserType | null>>;
+  isLoading: boolean;
+  error: any;
+}>({ authUser: null, setAuthUser: () => {}, isLoading: true, error: null });
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [authUser, setAuthUser] = useState<AuthUserType | null>(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        setIsLoading(true);
+        const res = await axiosInstance.get("/me");
+        if (!res) {
+          throw new Error("User not authenticated");
+        }
+        setAuthUser(res.data);
+      } catch (error: any) {
+        if (error.response?.data?.error === "Unauthorized - Token has expired") {
+          navigate("/login"); 
+        }
+        setError(error);
+        console.error("error in authContext:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUser();
+  }, [navigate]);
+
+  return (
+    <AuthContext.Provider value={{ authUser, isLoading, setAuthUser, error }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

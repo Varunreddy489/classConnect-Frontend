@@ -10,7 +10,7 @@ const Clubs = () => {
   const fetchClubs = async () => {
     try {
       const response = await axiosInstance.get("/club");
-      console.log(response);
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("error in Clubs:", error);

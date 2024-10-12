@@ -1,12 +1,10 @@
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import {
   Bell,
+  Menu,
   House,
   Inbox,
   Files,
-  Users,
-  StepBack,
-  StepForward,
   UserRoundPen,
   GraduationCap,
   ClipboardList,
@@ -18,223 +16,277 @@ import logo from "/logo-no-background.svg";
 import { ModeToggle } from "./ui/mode-toggle";
 import { Link } from "react-router-dom";
 import Logout from "./Logout";
+// import Profile from "@/pages/Profile";
 
 const Sidebar = () => {
-  const [toggleMenu, setToggleMenu] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const toggleMode = () => {
-    setToggleMenu(!toggleMenu);
+  const toggleSidebar = () => {
+    setIsCollapsed(!isCollapsed);
   };
 
   return (
-    <div className="flex flex-col h-screen top-10 left-0 antialiased bg-gray-50 dark:bg-[#000000] text-gray-950 dark:text-gray-100">
-      <div className="flex m-2 mb-10  ">
-        {/*   logo */}
-        <div className="p-4 flex items-center flex-shrink-0">
-          <a href="/" className="flex items-center space-x-3">
-            <div className="ml-4">
-              <img src={logo} className="h-8" alt="ClassConnect" />
-            </div>
+    <div
+      className={`flex flex-col top-0 left-0 h-screen bg-gray-50 dark:bg-[#000000] text-gray-950 dark:text-gray-100 transition-all duration-300 ${
+        isCollapsed ? "w-16" : "w-64"
+      }`}
+    >
+
+      <div className="flex items-center justify-between p-4">
+        {/* Logo */}
+        <div className="flex items-center">
+          <a
+            href="/"
+            className={`flex items-center space-x-3 ${
+              isCollapsed ? "hidden" : "block"
+            }`}
+          >
+            <img src={logo} className="h-8" alt="ClassConnect" />
           </a>
         </div>
-        <div className="mt-4">
-          <button onClick={toggleMode}>
-            {toggleMenu ? (
-              <StepBack className="size-10 p-1 hover:bg-gray-900 rounded-full" />
-            ) : (
-              <StepForward className="size-10 p-1 hover:bg-gray-900 rounded-full" />
-            )}
-          </button>
-        </div>
+        {/* Toggle Button */}
+        <button onClick={toggleSidebar}>
+          <Menu className="size-10 p-1 hover:bg-gray-900 rounded-full" />
+        </button>
       </div>
-      <div className="fixed flex flex-col w-64 h-full border-r">
-        {/* Scrollable Section */}
-        <div className="overflow-y-auto flex-grow">
-          <ul className="flex flex-col">
-            <li className="px-5 mt-10 ">
-              <div className="flex flex-row items-center h-8"></div>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+
+      <div className="flex flex-col w-full  h-screen  border-r ">
+        <ul className="flex flex-col space-y-2">
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <House className="ml-4 size-6 " />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <House />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Dashboard
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                Dashboard
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <Inbox className="ml-4" />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <Inbox />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Inbox
-                </span>
-                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-indigo-500 bg-indigo-50 rounded-full">
-                  New
-                </span>
-              </a>
-            </li>
+                Inbox
+              </span>
+              <span
+                className={`px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-indigo-500 bg-indigo-50 rounded-full ${
+                  isCollapsed ? "hidden" : "block"
+                }`}
+              >
+                New
+              </span>
+            </a>
+          </li>
+          <li>
+            <Link
+              to="/clubs"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <MessagesSquare className="ml-4" />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                All Clubs
+              </span>
+            </Link>
             <li>
               <Link
-                to="/clubs"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                to="/clubs/members"
+                className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <MessagesSquare />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Clubs
+                <div>
+                  <GraduationCap className="ml-4" />
+                </div>
+                <span
+                  className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                    isCollapsed ? "opacity-0" : "opacity-100"
+                  }`}
+                >
+                  Club Member
                 </span>
               </Link>
-              <ul className="pl-6">
-                {" "}
-                {/* Indent for sub-routes */}
-                <li>
-                  <Link
-                    to="/clubs/members"
-                    className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                  >
-                    <span className="inline-flex justify-center items-center ml-4">
-                      <GraduationCap />
-                    </span>
-                    <span className="ml-2 text-sm tracking-wide truncate">
-                      Club Member
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/clubs/all"
-                    className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-                  >
-                    <span className="inline-flex justify-center items-center ml-4">
-                      <Users />
-                    </span>
-                    <span className="ml-2 text-sm tracking-wide truncate">
-                      All Clubs
-                    </span>
-                  </Link>
-                </li>
-              </ul>
             </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
-              >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <Bell />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Notifications
-                </span>
-                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">
-                  1.2k
-                </span>
-              </a>
-            </li>
-            <Separator className="my-2" />
-            <li className="px-5">
-              <div className="flex flex-row items-center h-8">
-                <h1 className="tracking-wide text-xl font-bold mb-2 text-center">
-                  Tasks
-                </h1>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <Bell className="ml-4" />
               </div>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <ClipboardList />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Available Tasks
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                Notifications
+              </span>
+              <span
+                className={`px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full ${
+                  isCollapsed ? "hidden" : "block"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <Files />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Resources ( pdf ,links etc )
-                </span>
-                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
-                  15
-                </span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+                1.2k
+              </span>
+            </a>
+          </li>
+          <Separator className="my-2" />
+          <li className="px-5">
+            <div className="flex items-center h-8">
+              <h1
+                className={`tracking-wide text-xl font-bold mb-2 text-center ${
+                  isCollapsed ? "hidden" : "block"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <BadgeIndianRupee />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Jobs
-                </span>
-                <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full">
-                  15
-                </span>
-              </a>
-            </li>
-            <Separator className="my-2" />
-
-            <li className="px-5">
-              <div className="flex flex-row items-center h-8">
-                <h1 className="tracking-wide text-xl font-bold mb-2 text-center">
-                  Settings
-                </h1>
+                Tasks
+              </h1>
+            </div>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <ClipboardList className="ml-4" />
               </div>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <UserRoundPen />
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">
-                  Profile
-                </span>
-              </a>
-            </li>
-
-            <li>
+                Available Tasks
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <Files className="ml-4" />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                Resources (pdf, links, etc)
+              </span>
+              <span
+                className={`px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full ${
+                  isCollapsed ? "hidden" : "block"
+                }`}
+              >
+                15
+              </span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <BadgeIndianRupee className="ml-4" />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                Jobs
+              </span>
+              <span
+                className={`px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-500 bg-green-50 rounded-full ${
+                  isCollapsed ? "hidden" : "block"
+                }`}
+              >
+                15
+              </span>
+            </a>
+          </li>
+          <Separator className="my-2" />
+          <li className="px-5">
+            <div className="flex items-center h-8">
+              <h1
+                className={`tracking-wide text-xl font-bold mb-2 text-center ${
+                  isCollapsed ? "hidden" : "block"
+                }`}
+              >
+                Settings
+              </h1>
+            </div>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <UserRoundPen className="ml-4" />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                Profile
+              </span>
+            </a>
+          </li>
+          <li>
+            <button className="relative flex items-center h-11 w-full hover:bg-gray-900 pr-6 group">
               <Logout />
-            </li>
-
-            <li>
-              <a
-                href="#"
-                className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
               >
-                <span className="inline-flex justify-center items-center ml-4">
-                  <ModeToggle />
-                  Toggle theme
-                </span>
-              </a>
-            </li>
-          </ul>
-        </div>
+                Logout
+              </span>
+            </button>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <ModeToggle />
+              </div>
+              <span
+                className={` text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                Toggle theme
+              </span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
   );

@@ -26,9 +26,44 @@ export type CardFeatures = {
   description: string;
 };
 
+export type ClubMembers = {
+  id?: string;
+  name?: string;
+  email?: string;
+  profilePic?: string;
+};
+
 export type CreateClubTypes = {
   id: string;
   name: string;
   description: string;
+  members: ClubMembers[];
   profilePic?: string;
+};
+
+export type AuthUserType = {
+  id: string;
+  name: string;
+  email: string;
+  profilePic: string;
+};
+
+export type Student = {
+  id: string;
+  name: string;
+  email: string;
+  profilePic: string | null;
+};
+
+export type StudentsResponse = {
+  students: Student[];
+};
+
+export type UserClubsResponse = {
+  id: number;
+  name?: string;
+  description?: string;
+  profilePic?: string;
+  members?: ClubMembers[];
+  creator?: ClubMembers;
 };

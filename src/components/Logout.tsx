@@ -24,7 +24,7 @@ const Logout = () => {
     <div>
       <button
         onClick={logout}
-        className="relative flex flex-row items-center h-11 w-full focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 pr-6"
+        className="relative flex flex-row items-center h-11 w-full focus:outline-none hover:bg-gray-900 border-l-4 border-transparent hover:border-indigo-500 "
       >
         {loading ? (
           <span>Loading...</span> // Show loading state
@@ -33,7 +33,6 @@ const Logout = () => {
             <span className="inline-flex justify-center items-center ml-4">
               <LogOut />
             </span>
-            <span className="ml-2 text-sm tracking-wide truncate">Logout</span>
           </>
         )}
       </button>

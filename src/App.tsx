@@ -1,8 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import AllClubs from "./pages/Clubs";
+import Clubs from "./pages/Clubs";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import LandingPage from "./pages/LandingPage";
@@ -10,81 +10,68 @@ import Notifications from "./pages/Notifications";
 import { Toaster } from "./components/ui/toaster";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
+import ClubContainer from "./components/Clubs/ClubContainer";
+import UserClubs from "./pages/UserClubs";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <>
       <Routes>
         {/* Routes with Sidebar */}
         <Route
+          path="/home"
           element={
-            <Layout showSidebar>
+            <Layout>
               <Dashboard />
             </Layout>
           }
-          path="/home"
         />
+
         <Route
           path="/clubs"
           element={
-            <Layout showSidebar>
-              <AllClubs />
+            <Layout showSidebar={true}>
+              <Clubs />
             </Layout>
           }
         />
+
+        <Route
+          path="/clubs/:clubId"
+          element={
+            <Layout showSidebar={true}>
+              <UserClubs />
+            </Layout>
+          }
+        />
+
+        <Route
+          path="/user/clubs"
+          element={
+            <Layout showSidebar={true}>
+              <ClubContainer />
+            </Layout>
+          }
+        />
+
         <Route
           path="/notifications"
           element={
-            <Layout showSidebar>
+            <Layout showSidebar={true}>
               <Notifications />
             </Layout>
           }
         />
 
         {/* Public Routes without Sidebar */}
-        <Route
-          element={
-            <Layout showSidebar={false}>
-              <LandingPage />
-            </Layout>
-          }
-          path="/"
-        />
-        <Route
-          element={
-            <Layout showSidebar={false}>
-              <Login />
-            </Layout>
-          }
-          path="/login"
-        />
-        <Route
-          element={
-            <Layout showSidebar={false}>
-              <SignUp />
-            </Layout>
-          }
-          path="/signup"
-        />
-        <Route
-          element={
-            <Layout showSidebar={false}>
-              <ForgotPassword />
-            </Layout>
-          }
-          path="/forgot-password"
-        />
-        <Route
-          element={
-            <Layout showSidebar={false}>
-              <ResetPassword />
-            </Layout>
-          }
-          path="/reset-password/:token"
-        />
+        <Route element={<LandingPage />} path="/" />
+        <Route element={<Login />} path="/login" />
+        <Route element={<SignUp />} path="/signup" />
+        <Route element={<ForgotPassword />} path="/forgot-password" />
+        <Route element={<ResetPassword />} path="/reset-password/:token" />
       </Routes>
       <Toaster />
-    </BrowserRouter>
+    </>
   );
 };
 
