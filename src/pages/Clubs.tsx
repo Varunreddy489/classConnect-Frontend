@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { ClubTypes } from "@/types/types";
+import { ClubTypes } from "@/types/Client-types";
 import Spinner from "@/components/Spinner";
 import { axiosInstance } from "@/lib/axios";
 import ClubCard from "@/components/Clubs/ClubCard";

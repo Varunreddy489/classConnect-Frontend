@@ -1,37 +1,20 @@
-import Spinner from "@/components/Spinner";
-import { axiosInstance } from "@/lib/axios";
+import { useState } from "react";
 
-import { useQuery } from "@tanstack/react-query";
+import { Separator } from "@/components/ui/separator";
+import Conversations from "@/components/Clubs/Conversations";
+import MessageContainer from "@/components/Clubs/Messages/MessageContainer";
 
 const UserClubs = () => {
-  const fetchUserClubs = async () => {
-    try {
-      const response = await axiosInstance.get("/user/club");
-      console.log(response.data);
-      return response.data.clubs;
-    } catch (error) {
-      console.error("error in UserClubs: ", error);
-    }
-  };
-
-  const { data, isLoading, error } = useQuery({
-    queryFn: fetchUserClubs,
-    queryKey: ["userClubs"],
-  });
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center">
-        Error: {error.message}
+  const [selectedClub, setSelectedClub] = useState(null);
+  return (
+    <div className="flex  ">
+      <div className="m-3">
+        <Conversations setSelectedClub={setSelectedClub} />
       </div>
-    );
-  }
-
-  return <div>Clubs</div>;
+      <Separator orientation="vertical" className="h-screen  " />
+      <MessageContainer clubData={selectedClub} />
+    </div>
+  );
 };
 
 export default UserClubs;

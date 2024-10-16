@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { axiosInstance } from "@/lib/axios";
 import { useToast } from "@/hooks/use-toast";
-import { StudentAuthTypes } from "@/types/types";
+import { StudentAuthTypes } from "@/types/Client-types";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {

@@ -13,7 +13,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { axiosInstance } from "@/lib/axios";
-import { CreateClubTypes, StudentsResponse } from "@/types/types";
+import { CreateClubTypes, Student } from "@/types/Client-types";
 
 const CreateClub: FC = () => {
   const schema = z.object({
@@ -32,13 +32,13 @@ const CreateClub: FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const fetchMembers = async (): Promise<StudentsResponse> => {
+  const fetchMembers = async (): Promise<Student> => {
     const response = await axiosInstance.get("/student/all");
     console.log(response.data);
     return response.data;
   };
 
-  const { data, isLoading, error } = useQuery<StudentsResponse>({
+  const { data, isLoading, error } = useQuery<Student>({
     queryKey: ["members"],
     queryFn: fetchMembers,
   });
@@ -85,7 +85,6 @@ const CreateClub: FC = () => {
               )}
             </div>
 
-            {/* Club Description Input */}
             <div className="flex flex-col space-y-2">
               <label htmlFor="clubDescription" className="text-white">
                 Club Description
@@ -100,7 +99,6 @@ const CreateClub: FC = () => {
               )}
             </div>
 
-            {/* Add Members Section */}
             <div className="flex flex-col space-y-2">
               <label className="text-white">Add Members</label>
               {isLoading ? (
@@ -108,7 +106,7 @@ const CreateClub: FC = () => {
               ) : error ? (
                 <p className="text-red-600">Error loading members.</p>
               ) : (
-                data?.students.map((student) => (
+                data?.students.map((student:Student) => (
                   <div
                     key={student.email}
                     className="flex items-center space-x-2"
@@ -127,7 +125,6 @@ const CreateClub: FC = () => {
                 ))
               )}
             </div>
-            {/* Submit Button */}
             <Button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
               Create Club
             </Button>

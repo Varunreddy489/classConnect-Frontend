@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { axiosInstance } from "@/lib/axios";
 import { useToast } from "@/hooks/use-toast";
-import { StudentLoginTypes } from "@/types/types";
+import { StudentLoginTypes } from "@/types/Client-types";
 
 const Login = () => {
   const { toast } = useToast();
@@ -43,7 +43,6 @@ const Login = () => {
   const { mutate: login } = useMutation({
     mutationFn: async (data: StudentLoginTypes) => {
       const res = await axiosInstance.post("/student/login", data);
-      console.log(res.data);
       return res.data;
     },
     onSuccess: () => {

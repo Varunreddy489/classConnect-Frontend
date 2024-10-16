@@ -3,7 +3,7 @@ import { MoveRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
 import Navbar from "@/components/Navbar";
-import { ClubTypes } from "@/types/types";
+import { ClubTypes } from "@/types/Client-types";
 import { axiosInstance } from "@/lib/axios";
 import ClubCard from "@/components/Clubs/ClubCard";
 import { Button } from "@/components/ui/button";

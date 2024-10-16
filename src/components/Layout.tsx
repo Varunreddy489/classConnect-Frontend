@@ -11,7 +11,7 @@ const Layout = ({ children, showSidebar = true }: LayoutProps) => {
   return (
     <div className="min-h-screen flex">
       {showSidebar && <Sidebar />}
-      <main className={`flex-grow ${showSidebar ? "ml-10" : ""}`}>
+      <main className={`flex-grow ${showSidebar }`}>
         {children}
       </main>
     </div>

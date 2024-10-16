@@ -31,6 +31,7 @@ export type ClubMembers = {
   name?: string;
   email?: string;
   profilePic?: string;
+  studentId?: string;
 };
 
 export type CreateClubTypes = {
@@ -49,10 +50,11 @@ export type AuthUserType = {
 };
 
 export type Student = {
-  id: string;
-  name: string;
-  email: string;
-  profilePic: string | null;
+  id?: string;
+  name?: string;
+  email?: string;
+  profilePic?: string | null;
+  studentId?: string;
 };
 
 export type StudentsResponse = {
@@ -60,10 +62,17 @@ export type StudentsResponse = {
 };
 
 export type UserClubsResponse = {
-  id: number;
+  id: string;
   name?: string;
   description?: string;
   profilePic?: string;
   members?: ClubMembers[];
   creator?: ClubMembers;
+};
+
+export type Messagetypes = {
+  id: string;
+  body: string;
+  sender: Student;
+  createdAt: string;
 };

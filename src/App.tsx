@@ -5,19 +5,16 @@ import SignUp from "./pages/SignUp";
 import Clubs from "./pages/Clubs";
 import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
+import UserClubs from "./pages/UserClubs";
 import LandingPage from "./pages/LandingPage";
-import Notifications from "./pages/Notifications";
 import { Toaster } from "./components/ui/toaster";
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
-import ClubContainer from "./components/Clubs/ClubContainer";
-import UserClubs from "./pages/UserClubs";
 
 const App = () => {
   return (
     <>
       <Routes>
-        {/* Routes with Sidebar */}
         <Route
           path="/home"
           element={
@@ -35,9 +32,8 @@ const App = () => {
             </Layout>
           }
         />
-
         <Route
-          path="/clubs/:clubId"
+          path="/member/clubs"
           element={
             <Layout showSidebar={true}>
               <UserClubs />
@@ -46,26 +42,16 @@ const App = () => {
         />
 
         <Route
-          path="/user/clubs"
+          path="/member/clubs/:clubId"
           element={
             <Layout showSidebar={true}>
-              <ClubContainer />
+              <UserClubs />
             </Layout>
           }
         />
 
-        <Route
-          path="/notifications"
-          element={
-            <Layout showSidebar={true}>
-              <Notifications />
-            </Layout>
-          }
-        />
-
-        {/* Public Routes without Sidebar */}
-        <Route element={<LandingPage />} path="/" />
         <Route element={<Login />} path="/login" />
+        <Route element={<LandingPage />} path="/" />
         <Route element={<SignUp />} path="/signup" />
         <Route element={<ForgotPassword />} path="/forgot-password" />
         <Route element={<ResetPassword />} path="/reset-password/:token" />

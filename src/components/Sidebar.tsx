@@ -1,4 +1,3 @@
-import { Separator } from "@radix-ui/react-dropdown-menu";
 import {
   Bell,
   Menu,
@@ -12,11 +11,12 @@ import {
   BadgeIndianRupee,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Separator } from "@radix-ui/react-dropdown-menu";
+
+import Logout from "./Logout";
 import logo from "/logo-no-background.svg";
 import { ModeToggle } from "./ui/mode-toggle";
-import { Link } from "react-router-dom";
-import Logout from "./Logout";
-// import Profile from "@/pages/Profile";
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -31,10 +31,11 @@ const Sidebar = () => {
         isCollapsed ? "w-16" : "w-64"
       }`}
     >
-
       <div className="flex items-center justify-between p-4">
-        {/* Logo */}
-        <div className="flex items-center">
+        <div className="flex space-x-3 ">
+          <button onClick={toggleSidebar}>
+            <Menu className="size-10 p-1 hover:bg-gray-900 rounded-full" />
+          </button>
           <a
             href="/"
             className={`flex items-center space-x-3 ${
@@ -44,10 +45,6 @@ const Sidebar = () => {
             <img src={logo} className="h-8" alt="ClassConnect" />
           </a>
         </div>
-        {/* Toggle Button */}
-        <button onClick={toggleSidebar}>
-          <Menu className="size-10 p-1 hover:bg-gray-900 rounded-full" />
-        </button>
       </div>
 
       <div className="flex flex-col w-full  h-screen  border-r ">
@@ -93,6 +90,7 @@ const Sidebar = () => {
               </span>
             </a>
           </li>
+
           <li>
             <Link
               to="/clubs"
@@ -109,24 +107,25 @@ const Sidebar = () => {
                 All Clubs
               </span>
             </Link>
-            <li>
-              <Link
-                to="/clubs/members"
-                className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
-              >
-                <div>
-                  <GraduationCap className="ml-4" />
-                </div>
-                <span
-                  className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
-                    isCollapsed ? "opacity-0" : "opacity-100"
-                  }`}
-                >
-                  Club Member
-                </span>
-              </Link>
-            </li>
           </li>
+          <li>
+            <Link
+              to="/member/clubs"
+              className="relative flex items-center h-11 hover:bg-gray-900 pr-6 group"
+            >
+              <div>
+                <GraduationCap className="ml-4" />
+              </div>
+              <span
+                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                  isCollapsed ? "opacity-0" : "opacity-100"
+                }`}
+              >
+                Club Member
+              </span>
+            </Link>
+          </li>
+
           <li>
             <a
               href="#"
@@ -257,17 +256,17 @@ const Sidebar = () => {
               </span>
             </a>
           </li>
-          <li>
-            <button className="relative flex items-center h-11 w-full hover:bg-gray-900 pr-6 group">
+          <li className="flex hover:bg-gray-900 items-center ">
+            <div>
               <Logout />
-              <span
-                className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
-                  isCollapsed ? "opacity-0" : "opacity-100"
-                }`}
-              >
-                Logout
-              </span>
-            </button>
+            </div>
+            <span
+              className={`ml-2 text-sm tracking-wide truncate transition-opacity duration-300 ${
+                isCollapsed ? "opacity-0" : "opacity-100"
+              }`}
+            >
+              Logout
+            </span>
           </li>
           <li>
             <a

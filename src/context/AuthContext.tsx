@@ -10,7 +10,7 @@ import {
 } from "react";
 
 import { axiosInstance } from "@/lib/axios";
-import { AuthUserType } from "@/types/types";
+import { AuthUserType } from "@/types/Client-types";
 import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext<{
@@ -39,13 +39,17 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         if (!res) {
           throw new Error("User not authenticated");
         }
+
+        localStorage.setItem("num", JSON.stringify(res.data.isStudent.id));
+
         setAuthUser(res.data);
       } catch (error: any) {
-        if (error.response?.data?.error === "Unauthorized - Token has expired") {
-          navigate("/login"); 
+        if (error.response.data.error === "Unauthorized - Token has expired") {
+          navigate("/login");
+        } else {
+          setError(error);
+          console.error("error in authContext:", error);
         }
-        setError(error);
-        console.error("error in authContext:", error);
       } finally {
         setIsLoading(false);
       }

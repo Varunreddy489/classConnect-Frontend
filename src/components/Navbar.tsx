@@ -1,18 +1,23 @@
-// import { useState } from "react";
-// import Dropdown from "./Dropdown";
+import { MoveRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
+import { Button } from "./ui/button";
 import logo from "/logo-no-background.svg";
 import { ModeToggle } from "./ui/mode-toggle";
+import { useAuth } from "@/context/AuthContext";
+
 
 const Navbar = () => {
-  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const { authUser } = useAuth();
 
-  // const toggleDropdown = () => {
-  //   setIsDropdownOpen(!isDropdownOpen);
-  // };
-
-  // const data = localStorage.getItem("user");
-  // const userData = data ? JSON.parse(data) : null;
+  const redirectUser = () => {
+    if (authUser) {
+      navigate("/home");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <nav className="dark:bg-[#000000] bg-slate-500 top-0 left-0 w-full  relative py-1 px-3">
@@ -26,23 +31,17 @@ const Navbar = () => {
         </div>
 
         <div className="flex flex-grow justify-end items-center md:order-2 space-x-6 rtl:space-x-reverse relative">
-          <div className="relative">
-            {/* <button
-              type="button"
-              className="flex text-sm bg-gray-800 p-2 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              id="user-menu-button"
-              aria-expanded={isDropdownOpen}
-              onClick={toggleDropdown}
+          <div className="relative"></div>
+          <div className="flex">
+            <Button
+              onClick={redirectUser}
+              className="flex justify-center bg-blue-700 hover:bg-blue-900 items-center space-x-1 text-black dark:text-white  "
             >
-              <img
-                className="w-8 h-8 rounded-full"
-                src={userData?.profilePic || ""}
-                alt="user photo"
-              />
-            </button> */}
-            {/* {isDropdownOpen && <Dropdown />} */}
+              <span>Visit Page</span>
+              <MoveRight className=" w-5 " />
+            </Button>
+            <ModeToggle />
           </div>
-          <ModeToggle />
         </div>
       </div>
     </nav>

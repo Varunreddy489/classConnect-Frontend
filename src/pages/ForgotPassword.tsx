@@ -9,7 +9,6 @@ import { axiosInstance } from "@/lib/axios";
 import { useToast } from "@/hooks/use-toast";
 
 const ForgotPassword = () => {
-
   type ForgotPassword = {
     email: string;
   };
@@ -48,7 +47,7 @@ const ForgotPassword = () => {
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
         description:
-        error?.response?.data.message ||
+          error?.response?.data.message ||
           "There was a problem with your request.",
       });
 
@@ -58,7 +57,7 @@ const ForgotPassword = () => {
 
   const onSubmit = (data: ForgotPassword) => {
     console.log(data);
-    forgotPassword(data)
+    forgotPassword(data);
   };
 
   return (
@@ -98,7 +97,7 @@ const ForgotPassword = () => {
               isSubmitting ? "opacity-50 cursor-not-allowed" : ""
             }`}
             type="submit"
-            disabled={isSubmitting }
+            disabled={isSubmitting}
           >
             Submit
           </button>

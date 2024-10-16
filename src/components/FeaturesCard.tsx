@@ -1,4 +1,4 @@
-import { CardFeatures } from "@/types/types";
+import { CardFeatures } from "@/types/Client-types";
 
 const FeaturesCard = ({ feature }: { feature: CardFeatures }) => {
   return (

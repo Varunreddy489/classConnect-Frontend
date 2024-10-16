@@ -8,7 +8,7 @@ import { Info } from "lucide-react";
 
 import { Button } from "../ui/button";
 import ClubDetails from "../ClubDetails";
-import { ClubTypes } from "@/types/types";
+import { ClubTypes } from "@/types/Client-types";
 import { axiosInstance } from "@/lib/axios";
 
 const ClubCard = ({ club }: { club: ClubTypes }) => {
